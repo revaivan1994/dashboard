@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+   <meta charset="UTF-8" />
+   <title>Dashboard</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com" />
+   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+   <link rel="stylesheet" href="modules/css/main.css" />
+</head>
+
+<body>
+   <div class="wrapper">
+      <aside class="sidebar">
+         <div class="sidebar-top">
+            <span class="sidebar-logo">Dashboard</span>
+            <button class="toggle-btn">☰</button>
+         </div>
+
+         <div class="sidebar-body">
+            <div class="sidebar-section">
+               <select id="monthSelect">
+                  <option value="0">January</option>
+                  <option value="1">February</option>
+                  <option value="2">March</option>
+                  <option value="3">April</option>
+                  <option value="4">May</option>
+                  <option value="5">June</option>
+                  <option value="6">July</option>
+                  <option value="7">August</option>
+                  <option value="8">September</option>
+                  <option value="9">October</option>
+                  <option value="10">November</option>
+                  <option value="11">December</option>
+               </select>
+
+               <select id="yearSelect">
+                  <option value="2025">2025</option>
+                  <option value="2026">2026</option>
+                  <option value="2027">2027</option>
+               </select>
+
+               <nav class="sidebar-nav">
+                  <button class="nav-item active" data-tab="projects">Progects</button>
+                  <button class="nav-item" data-tab="employees">Employees</button>
+               </nav>
+
+               <button class="seed-btn">Seed Data</button>
+            </div>
+         </div>
+         
+         
+      </aside>
+      <main class="main">
+         <header class="main-header">
+            <span class="main-title">Projects</span>
+            <button class="add-btn">+ Add Project</button>
+         </header>
+         
+         <div class="tab-bar">
+            <button class="tab active" data-tab="projects">Projects</button>
+            <button class="tab" data-tab="employees">Employees</button>
+         </div>
+
+         <div class="content">
+            <div class="tab-panel active" id="panel-projects">
+               projects table here
+            </div>
+            <div class="tab-panel" id="panel-employees">
+               employees table here
+            </div>
+         </div>
+      </main>
+   </div>
+
+
+   <script type="module" src="modules/js/main.js"></script>
+</body>
+
+</html>
