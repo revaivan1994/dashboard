@@ -6,3 +6,10 @@ import './components/assignments.js';
 import './components/calendar.js';
 import './components/ui.js';
 
+import { initData } from './components/data.js';
+import { renderProjectsTable } from './components/projects.js';
+import { randerEmployeesTable } from './components/employees.js';
+
+initData();
+renderProjectsTable();
+randerEmployeesTable();
