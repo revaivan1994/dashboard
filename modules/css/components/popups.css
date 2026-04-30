@@ -1,0 +1,44 @@
+.assign-popup {
+  display: none;
+  position: fixed;
+  z-index: 100;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  width: 300px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+}
+
+.assign-popup.active {
+  display: block;
+}
+
+.assign-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.assign-actions button {
+  flex: 1;
+  padding: 8px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  background: var(--bg-tertiary);
+  color: var(--text-primary);
+  font-family: var(--font);
+  cursor: pointer;
+}
+
+.assign-actions button:last-child {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+.assign-info {
+  font-size: 12px;
+  color: var(--text-secondary);
+  margin-top: 8px;
+}
