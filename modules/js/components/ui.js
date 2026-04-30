@@ -66,13 +66,18 @@ addBtn.addEventListener('click', () => {
 });
 
 panelOverlay.addEventListener('click', () => {
-  panelOverlay.classList.remove('active');
-  addProjectPanel.classList.remove('active');
-  addEmployeePanel.classList.remove('active');
+   panelOverlay.classList.remove('active');
+   addProjectPanel.classList.remove('active');
+   addEmployeePanel.classList.remove('active');
 });
 
 panelClose.addEventListener('click', () => {
    panelOverlay.classList.remove('active');
    addProjectPanel.classList.remove('active');
+   addEmployeePanel.classList.remove('active');
+});
+
+document.getElementById('closeEmployeePanel').addEventListener('click', () => {
+   panelOverlay.classList.remove('active');
    addEmployeePanel.classList.remove('active');
 });

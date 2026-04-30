@@ -1,5 +1,5 @@
 import { getData, getDataPeriod, saveData } from "./data.js";
-import { formatCurrency } from "./calculations.js";
+import { formatCurrency, getTotalEstimatedIncome } from "./calculations.js";
 
 function renderProjectsTable() {
     const { year, month } = getDataPeriod();
@@ -26,6 +26,11 @@ function renderProjectsTable() {
             deleteProject(project.id);
         });
     });
+
+    const totalIncome = getTotalEstimatedIncome(data.projects, data.employees, year, month);
+    const totalEl = document.getElementById('totalIncome');
+    totalEl.textContent = formatCurrency(totalIncome);
+    totalEl.className = totalIncome >= 0 ? 'income-pos' : 'income-neg';
 }
 
 
@@ -144,9 +149,9 @@ function deleteProject(id) {
     const { year, month } = getDataPeriod();
     const data = getData(year, month);
     const project = data.projects.find(p => p.id === id);
-    
-    if(!confirm(`Delete project "${project.name}"?`)) return;
-    
+
+    if (!confirm(`Delete project "${project.name}"?`)) return;
+
     data.projects = data.projects.filter(p => p.id !== id);
     saveData(year, month, data);
     renderProjectsTable();

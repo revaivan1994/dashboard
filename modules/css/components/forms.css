@@ -109,3 +109,9 @@
 .input-error {
   border-color: var(--red) !important;
 }
+
+.panel-body {
+  padding: 24px;
+  overflow-y: auto;
+  height: calc(100% - 65px);
+}

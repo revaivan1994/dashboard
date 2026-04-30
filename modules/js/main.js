@@ -10,6 +10,16 @@ import { initData } from './components/data.js';
 import { renderProjectsTable } from './components/projects.js';
 import { randerEmployeesTable } from './components/employees.js';
 
+document.getElementById('monthSelect').addEventListener('change', () => {
+  renderProjectsTable();
+  randerEmployeesTable();
+});
+
+document.getElementById('yearSelect').addEventListener('change', () => {
+  renderProjectsTable();
+  randerEmployeesTable();
+});
+
 initData();
 renderProjectsTable();
 randerEmployeesTable();
