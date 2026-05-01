@@ -20,6 +20,11 @@ document.getElementById('yearSelect').addEventListener('change', () => {
   randerEmployeesTable();
 });
 
+document.addEventListener('dataUpdated', () => {
+  renderProjectsTable();
+  randerEmployeesTable();
+});
+
 initData();
 renderProjectsTable();
 randerEmployeesTable();

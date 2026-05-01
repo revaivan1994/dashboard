@@ -41,7 +41,7 @@
                </select>
 
                <nav class="sidebar-nav">
-                  <button class="nav-item active" data-tab="projects">Progects</button>
+                  <button class="nav-item active" data-tab="projects">Projects</button>
                   <button class="nav-item" data-tab="employees">Employees</button>
                </nav>
 
@@ -113,30 +113,29 @@
          <h2>Add Project</h2>
          <button class="panel-close">×</button>
       </div>
+
       <div class="panel-body">
-         <div class="panel-body">
-            <div class="form-group">
-               <label>Project Name</label>
-               <input type="text" id="projectName" placeholder="Enter project name" />
-               <span class="form-error" id="projectNameError"></span>
-            </div>
-            <div class="form-group">
-               <label>Company Name</label>
-               <input type="text" id="companyName" placeholder="Enter company name" />
-               <span class="form-error" id="companyNameError"></span>
-            </div>
-            <div class="form-group">
-               <label>Budget</label>
-               <input type="number" id="projectBudget" placeholder="0.00" />
-               <span class="form-error" id="projectBudgetError"></span>
-            </div>
-            <div class="form-group">
-               <label>Capacity</label>
-               <input type="number" id="projectCapacity" placeholder="1" />
-               <span class="form-error" id="projectCapacityError"></span>
-            </div>
-            <button class="submit-btn" id="submitProject" disabled>Add Project</button>
+         <div class="form-group">
+            <label for="projectName">Project Name</label>
+            <input type="text" id="projectName" placeholder="Enter project name" />
+            <span class="form-error" id="projectNameError"></span>
          </div>
+         <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" placeholder="Enter company name" />
+            <span class="form-error" id="companyNameError"></span>
+         </div>
+         <div class="form-group">
+            <label for="projectBudget">Budget</label>
+            <input type="number" id="projectBudget" placeholder="0.00" />
+            <span class="form-error" id="projectBudgetError"></span>
+         </div>
+         <div class="form-group">
+            <label for="projectCapacity">Capacity</label>
+            <input type="number" id="projectCapacity" placeholder="1" />
+            <span class="form-error" id="projectCapacityError"></span>
+         </div>
+         <button class="submit-btn" id="submitProject" disabled>Add Project</button>
       </div>
    </div>
 
@@ -147,22 +146,22 @@
       </div>
       <div class="panel-body">
          <div class="form-group">
-            <label>Name</label>
+            <label for="employeeName">Name</label>
             <input type="text" id="employeeName" placeholder="Enter name" />
             <span class="form-error" id="employeeNameError"></span>
          </div>
          <div class="form-group">
-            <label>Surname</label>
+            <label for="employeeSurname">Surname</label>
             <input type="text" id="employeeSurname" placeholder="Enter surname" />
             <span class="form-error" id="employeeSurnameError"></span>
          </div>
          <div class="form-group">
-            <label>Date of Birth</label>
+            <label for="employeeDob">Date of Birth</label>
             <input type="date" id="employeeDob" />
             <span class="form-error" id="employeeDobError"></span>
          </div>
          <div class="form-group">
-            <label>Position</label>
+            <label for="employeePosition">Position</label>
             <select id="employeePosition">
                <option value="">Select position</option>
                <option value="Junior">Junior</option>
@@ -175,7 +174,7 @@
             <span class="form-error" id="employeePositionError"></span>
          </div>
          <div class="form-group">
-            <label>Salary</label>
+            <label for="employeeSalary">Salary</label>
             <input type="number" id="employeeSalary" placeholder="0.00" />
             <span class="form-error" id="employeeSalaryError"></span>
          </div>
@@ -188,17 +187,17 @@
          <h3>Assign Employee</h3>
 
          <div class="form-group">
-            <label>Project</label>
+            <label for="project">Project</label>
             <select id="assignProject"></select>
          </div>
 
          <div class="form-group">
-            <label>Capacity: <span id="capacityValue">0.5</span></label>
+            <label for="capacity">Capacity: <span id="capacityValue">0.5</span></label>
             <input type="range" id="capacitySlider" min="0" max="1.5" step="0.1" value="0.5" />
          </div>
 
          <div class="form-group">
-            <label>Fit: <span id="fitValue">1.0</span></label>
+            <label for="fit">Fit: <span id="fitValue">1.0</span></label>
             <input type="range" id="fitSlider" min="0" max="1" step="0.1" value="1" />
          </div>
 

@@ -58,6 +58,31 @@ document.getElementById('assignConfirm').addEventListener('click', () => {
    });
 
    saveData(year, month, data);
+   document.dispatchEvent(new CustomEvent('dataUpdated'));
+   document.getElementById('assignPopup').classList.remove('active');
+});
+
+document.getElementById('assignConfirm').addEventListener('click', () => {
+   const { year, month } = getDataPeriod();
+   const data = getData(year, month);
+
+   const projectId = Number(document.getElementById('assignProject').value);
+   const capacity = Number(document.getElementById('capacitySlider').value);
+   const fit = Number(document.getElementById('fitSlider').value);
+
+   const employee = data.employees.find(e => e.id === currentEmployeeId);
+
+   employee.assignments.push({ projectId, capacity, fit });
+   saveData(year, month, data);
+   document.getElementById('assignPopup').classList.remove('active');
+
+   employee.assignments.push({
+      projectId,
+      capacity,
+      fit
+   });
+
+   saveData(year, month, data);
    document.getElementById('assignPopup').classList.remove('active');
 });
 

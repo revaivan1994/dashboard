@@ -1,6 +1,9 @@
 import { getData, getDataPeriod, saveData } from "./data.js";
-import { calculateAge, formatCurrency } from "./calculations.js";
+import { calculateAge, formatCurrency, getEmployeeCost, getEffectiveCapacity, getProjectRevenue } from "./calculations.js";
 import { openAssignPopup } from './assignments.js';
+
+
+
 
 function randerEmployeesTable() {
    const { year, month } = getDataPeriod();
@@ -9,7 +12,30 @@ function randerEmployeesTable() {
    const tbody = document.getElementById("employeesBody");
    tbody.innerHTML = '';
 
+
    data.employees.forEach(employee => {
+
+      const estPayment = employee.assignments.length > 0
+         ? employee.assignments.reduce((sum, a) => sum + getEmployeeCost(a, employee), 0)
+         : employee.salary * 0.5;
+      const projIncome = employee.assignments.reduce((sum, assignment) => {
+         const project = data.projects.find(p => p.id === assignment.projectId);
+         if (!project) return sum;
+
+         const effectiveCap = getEffectiveCapacity(assignment, employee, year, month);
+         const totalRevenue = getProjectRevenue(project, data.employees, year, month);
+         const capacityForRevenue = Math.max(project.capacity,
+            data.employees.reduce((s, e) => {
+               const a = e.assignments.find(a => a.projectId === project.id);
+               return a ? s + getEffectiveCapacity(a, e, year, month) : s;
+            }, 0)
+         );
+         const revenuePerUnit = project.budget / capacityForRevenue;
+         const revenue = revenuePerUnit * effectiveCap;
+         const cost = getEmployeeCost(assignment, employee);
+         return sum + revenue - cost;
+      }, 0);
+
       const tr = document.createElement('tr');
       tr.innerHTML = `
             <td>${employee.name}</td>
@@ -17,9 +43,11 @@ function randerEmployeesTable() {
             <td>${calculateAge(employee.dateOfBirth)}</td>
             <td>${employee.position}</td>
             <td>${formatCurrency(employee.salary)}</td>
-            <td>-</td>
-            <td>-</td>
-            <td>-</td>
+            <td>${formatCurrency(estPayment)}</td>
+            <td>${employee.assignments.length > 0 ? `Show Assignments (${employee.assignments.length})` : '-'}</td>
+            <td class="${projIncome >= 0 ? 'income-pos' : 'income-neg'}">${formatCurrency(projIncome)}</td>
+            
+            
             <td>
                <button class="assign-btn" data-id="${employee.id}">Assign</button>
                <button class="delete-btn" data-id="${employee.id}">Delete</button>

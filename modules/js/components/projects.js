@@ -1,36 +1,41 @@
 import { getData, getDataPeriod, saveData } from "./data.js";
-import { formatCurrency, getTotalEstimatedIncome } from "./calculations.js";
+import { formatCurrency, getTotalEstimatedIncome, getProjectRevenue, getEmployeeCost } from "./calculations.js";
 
 function renderProjectsTable() {
-    const { year, month } = getDataPeriod();
-    const data = getData(year, month);
+   const { year, month } = getDataPeriod();
+   const data = getData(year, month);
 
-    const tbody = document.getElementById("projectsBody");
-    tbody.innerHTML = '';
+   const tbody = document.getElementById("projectsBody");
+   tbody.innerHTML = '';
 
-    data.projects.forEach(project => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
+   data.projects.forEach(project => {
+      const projectIncome = getProjectRevenue(project, data.employees, year, month) -
+         data.employees.reduce((sum, employee) => {
+            const assignment = employee.assignments.find(a => a.projectId === project.id);
+            return assignment ? sum + getEmployeeCost(assignment, employee) : sum;
+         }, 0);
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
             <td>${project.company}</td>
             <td>${project.name}</td>
             <td>${formatCurrency(project.budget)}</td>
             <td>${project.capacity}</td>
             <td>-</td>
-            <td>-</td>
+            <td class="${projectIncome >= 0 ? 'income-pos' : 'income-neg'}">${formatCurrency(projectIncome)}</td>
             <td><button class="delete-btn" data-id="${project.id}">Delete</button></td>
         `;
-        tbody.appendChild(tr);
+      tbody.appendChild(tr);
 
-        const deleteBtn = tr.querySelector('.delete-btn');
-        deleteBtn.addEventListener('click', () => {
-            deleteProject(project.id);
-        });
-    });
+      const deleteBtn = tr.querySelector('.delete-btn');
+      deleteBtn.addEventListener('click', () => {
+         deleteProject(project.id);
+      });
+   });
 
-    const totalIncome = getTotalEstimatedIncome(data.projects, data.employees, year, month);
-    const totalEl = document.getElementById('totalIncome');
-    totalEl.textContent = formatCurrency(totalIncome);
-    totalEl.className = totalIncome >= 0 ? 'income-pos' : 'income-neg';
+   const totalIncome = getTotalEstimatedIncome(data.projects, data.employees, year, month);
+   const totalEl = document.getElementById('totalIncome');
+   totalEl.textContent = formatCurrency(totalIncome);
+   totalEl.className = totalIncome >= 0 ? 'income-pos' : 'income-neg';
 }
 
 
@@ -44,64 +49,64 @@ const projectBudgetError = document.getElementById("projectBudgetError");
 const projectCapacityError = document.getElementById("projectCapacityError");
 
 function validateName(value) {
-    const reg = /^[a-zA-Z0-9 ]+$/;
-    return value.trim().length >= 3 && reg.test(value.trim());
+   const reg = /^[a-zA-Z0-9 ]+$/;
+   return value.trim().length >= 3 && reg.test(value.trim());
 }
 
 function validateCompanyName(value) {
-    const reg = /^[a-zA-Z0-9 ]+$/;
-    return value.trim().length >= 2 && reg.test(value.trim());
+   const reg = /^[a-zA-Z0-9 ]+$/;
+   return value.trim().length >= 2 && reg.test(value.trim());
 }
 
 function validateBudget(value) {
-    return /^\d+$/.test(value) && Number(value) > 0;
+   return /^\d+$/.test(value) && Number(value) > 0;
 }
 
 function validateCapacity(value) {
-    const num = Number(value);
-    return Number.isInteger(num) && num >= 1;
+   const num = Number(value);
+   return Number.isInteger(num) && num >= 1;
 }
 
 function validateProjectForm() {
-    if (!validateName(projectName.value)) {
-        projectName.classList.add('input-error');
-        projectNameError.innerText = "Please use only English letters (2-30 chars)";
-    } else {
-        projectName.classList.remove('input-error');
-        projectNameError.innerText = "";
-    }
+   if (!validateName(projectName.value)) {
+      projectName.classList.add('input-error');
+      projectNameError.innerText = "Please use only English letters (2-30 chars)";
+   } else {
+      projectName.classList.remove('input-error');
+      projectNameError.innerText = "";
+   }
 
-    if (!validateCompanyName(companyName.value)) {
-        companyName.classList.add('input-error');
-        companyNameError.innerText = "Please minimum 2 characters, letters and numbers only";
-    } else {
-        companyName.classList.remove('input-error');
-        companyNameError.innerText = "";
-    }
+   if (!validateCompanyName(companyName.value)) {
+      companyName.classList.add('input-error');
+      companyNameError.innerText = "Please minimum 2 characters, letters and numbers only";
+   } else {
+      companyName.classList.remove('input-error');
+      companyNameError.innerText = "";
+   }
 
-    if (!validateBudget(projectBudget.value)) {
-        projectBudget.classList.add('input-error');
-        projectBudgetError.innerText = "Please use only positive number";
-    } else {
-        projectBudget.classList.remove('input-error');
-        projectBudgetError.innerText = "";
-    }
+   if (!validateBudget(projectBudget.value)) {
+      projectBudget.classList.add('input-error');
+      projectBudgetError.innerText = "Please use only positive number";
+   } else {
+      projectBudget.classList.remove('input-error');
+      projectBudgetError.innerText = "";
+   }
 
-    if (!validateCapacity(projectCapacity.value)) {
-        projectCapacity.classList.add('input-error');
-        projectCapacityError.innerText = "Please use only integer number, minimum 1";
-    } else {
-        projectCapacity.classList.remove('input-error');
-        projectCapacityError.innerText = "";
-    }
+   if (!validateCapacity(projectCapacity.value)) {
+      projectCapacity.classList.add('input-error');
+      projectCapacityError.innerText = "Please use only integer number, minimum 1";
+   } else {
+      projectCapacity.classList.remove('input-error');
+      projectCapacityError.innerText = "";
+   }
 
-    const submitBtn = document.getElementById('submitProject');
-    const isValid = validateName(projectName.value) &&
-        validateCompanyName(companyName.value) &&
-        validateBudget(projectBudget.value) &&
-        validateCapacity(projectCapacity.value);
+   const submitBtn = document.getElementById('submitProject');
+   const isValid = validateName(projectName.value) &&
+      validateCompanyName(companyName.value) &&
+      validateBudget(projectBudget.value) &&
+      validateCapacity(projectCapacity.value);
 
-    submitBtn.disabled = !isValid;
+   submitBtn.disabled = !isValid;
 }
 
 projectName.addEventListener('input', validateProjectForm);
@@ -110,51 +115,51 @@ projectBudget.addEventListener('input', validateProjectForm);
 projectCapacity.addEventListener('input', validateProjectForm);
 
 function addProject() {
-    const project = {
-        id: Date.now(),
-        name: document.getElementById('projectName').value,
-        company: document.getElementById('companyName').value,
-        budget: Number(document.getElementById('projectBudget').value),
-        capacity: Number(document.getElementById('projectCapacity').value),
-    }
-    return project;
+   const project = {
+      id: Date.now(),
+      name: document.getElementById('projectName').value,
+      company: document.getElementById('companyName').value,
+      budget: Number(document.getElementById('projectBudget').value),
+      capacity: Number(document.getElementById('projectCapacity').value),
+   }
+   return project;
 }
 
 const panelOverlay = document.getElementById('panelOverlay');
 const addProjectPanel = document.getElementById('addProjectPanel');
 
 function saveProject() {
-    const { year, month } = getDataPeriod();
-    const data = getData(year, month);
-    const newProject = addProject();
+   const { year, month } = getDataPeriod();
+   const data = getData(year, month);
+   const newProject = addProject();
 
-    data.projects.push(newProject);
-    saveData(year, month, data);
+   data.projects.push(newProject);
+   saveData(year, month, data);
 
-    projectName.value = '';
-    companyName.value = '';
-    projectBudget.value = '';
-    projectCapacity.value = '';
-    validateProjectForm();
+   projectName.value = '';
+   companyName.value = '';
+   projectBudget.value = '';
+   projectCapacity.value = '';
+   validateProjectForm();
 
-    renderProjectsTable();
+   renderProjectsTable();
 
-    panelOverlay.classList.remove('active');
-    addProjectPanel.classList.remove('active');
+   panelOverlay.classList.remove('active');
+   addProjectPanel.classList.remove('active');
 }
 
 document.getElementById('submitProject').addEventListener('click', saveProject);
 
 function deleteProject(id) {
-    const { year, month } = getDataPeriod();
-    const data = getData(year, month);
-    const project = data.projects.find(p => p.id === id);
+   const { year, month } = getDataPeriod();
+   const data = getData(year, month);
+   const project = data.projects.find(p => p.id === id);
 
-    if (!confirm(`Delete project "${project.name}"?`)) return;
+   if (!confirm(`Delete project "${project.name}"?`)) return;
 
-    data.projects = data.projects.filter(p => p.id !== id);
-    saveData(year, month, data);
-    renderProjectsTable();
+   data.projects = data.projects.filter(p => p.id !== id);
+   saveData(year, month, data);
+   renderProjectsTable();
 }
 
 
