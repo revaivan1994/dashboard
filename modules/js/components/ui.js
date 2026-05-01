@@ -52,7 +52,6 @@ toggleBtn.addEventListener('click', () => {
    toggleBtn.textContent = sidebar.classList.contains('collapsed') ? '→' : '☰';
 });
 
-//slide in
 
 const addEmployeePanel = document.getElementById('addEmployeePanel');
 
@@ -81,3 +80,60 @@ document.getElementById('closeEmployeePanel').addEventListener('click', () => {
    panelOverlay.classList.remove('active');
    addEmployeePanel.classList.remove('active');
 });
+
+const seedBtn = document.querySelector('.seed-btn');
+const seedPopupOverlay = document.getElementById('seedPopupOverlay');
+const seedPopup = document.getElementById('seedPopup');
+const confirmSeedBtn = document.getElementById('confirmSeedBtn');
+const cancelSeedBtn = document.getElementById('cancelSeedBtn');
+
+function openSeedPopup() {
+    if (seedPopupOverlay && seedPopup) {
+        seedPopupOverlay.classList.add('active');
+        seedPopup.classList.add('active');
+    }
+}
+
+function closeSeedPopup() {
+    if (seedPopupOverlay && seedPopup) {
+        seedPopupOverlay.classList.remove('active');
+        seedPopup.classList.remove('active');
+    }
+}
+
+function loadSeedData() {
+    import('./data.js').then(module => {
+        module.seedData();
+        closeSeedPopup();
+        if (typeof renderProjectsTable !== 'undefined') {
+            renderProjectsTable();
+        }
+        if (typeof randerEmployeesTable !== 'undefined') {
+            randerEmployeesTable();
+        }
+        if (typeof updateCompanyFilterOptions !== 'undefined') {
+            updateCompanyFilterOptions();
+        }
+    });
+}
+
+if (seedBtn) {
+    seedBtn.addEventListener('click', openSeedPopup);
+}
+
+if (confirmSeedBtn) {
+    confirmSeedBtn.addEventListener('click', loadSeedData);
+}
+
+if (cancelSeedBtn) {
+    cancelSeedBtn.addEventListener('click', closeSeedPopup);
+}
+
+if (seedPopupOverlay) {
+    seedPopupOverlay.addEventListener('click', closeSeedPopup);
+}
+
+const seedCloseBtn = document.querySelector('#seedPopup .popup-close');
+if (seedCloseBtn) {
+    seedCloseBtn.addEventListener('click', closeSeedPopup);
+}

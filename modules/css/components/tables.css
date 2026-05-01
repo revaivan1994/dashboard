@@ -42,3 +42,123 @@ tbody tr:last-child td {
 
 .income-pos { color: var(--green); }
 .income-neg { color: var(--red); }
+
+.editable-position {
+  cursor: pointer;
+}
+
+.editable-position:hover {
+  color: var(--accent);
+}
+
+.editable-position select {
+  background: var(--bg-tertiary);
+  border: 1px solid var(--accent);
+  border-radius: var(--radius);
+  color: var(--text-primary);
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 4px 8px;
+  cursor: pointer;
+  outline: none;
+}
+
+#panel-projects th[data-sort],
+#panel-employees th[data-sort] {
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+    transition: background-color 0.2s ease;
+}
+
+#panel-projects th[data-sort]:hover,
+#panel-employees th[data-sort]:hover {
+    background-color: var(--border);
+}
+
+.sort-icon {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 12px;
+    opacity: 0.4;
+    transition: all 0.2s ease;
+    font-weight: normal;
+}
+
+#panel-projects th[data-sort]:hover .sort-icon,
+#panel-employees th[data-sort]:hover .sort-icon {
+    opacity: 0.8;
+    transform: scale(1.1);
+}
+
+th[data-sort] .sort-icon {
+    opacity: 0.6;
+    font-weight: bold;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-2px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.sort-icon {
+    animation: fadeIn 0.2s ease;
+}
+
+.filters-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--bg-tertiary);
+    border-bottom: 1px solid var(--border);
+    gap: 16px;
+    flex-wrap: wrap;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.filter-group label {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.filter-select {
+    padding: 6px 12px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-primary);
+    font-family: var(--font);
+    font-size: 13px;
+    cursor: pointer;
+    outline: none;
+}
+
+.filter-select:hover,
+.filter-select:focus {
+    border-color: var(--accent);
+}
+
+.clear-filters-btn {
+    padding: 6px 12px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    color: var(--text-secondary);
+    font-family: var(--font);
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.clear-filters-btn:hover {
+    background: var(--bg-secondary);
+    border-color: var(--accent);
+    color: var(--accent);
+}

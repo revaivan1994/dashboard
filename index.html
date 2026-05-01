@@ -64,15 +64,24 @@
 
          <div class="content">
             <div class="tab-panel active" id="panel-projects">
+               <div class="filters-bar">
+                  <div class="filter-group">
+                     <label>Filter by Company:</label>
+                     <select id="companyFilter" class="filter-select">
+                        <option value="all">All Companies</option>
+                     </select>
+                  </div>
+                  <button class="clear-filters-btn" id="clearProjectsFilters">Clear Filters</button>
+               </div>
                <table>
                   <thead>
                      <tr>
-                        <th>Company</th>
-                        <th>Project</th>
-                        <th>Budget</th>
-                        <th>Capacity</th>
+                        <th data-sort="company">Company <span class="sort-icon">⇅</span></th>
+                        <th data-sort="name">Project <span class="sort-icon">⇅</span></th>
+                        <th data-sort="budget">Budget <span class="sort-icon">⇅</span></th>
+                        <th data-sort="capacity">Capacity <span class="sort-icon">⇅</span></th>
                         <th>Employees</th>
-                        <th>Est. Income</th>
+                        <th data-sort="income">Est. Income <span class="sort-icon">⇅</span></th>
                         <th>Actions</th>
                      </tr>
                   </thead>
@@ -85,14 +94,29 @@
                </div>
             </div>
             <div class="tab-panel" id="panel-employees">
+               <div class="filters-bar">
+                  <div class="filter-group">
+                     <label>Filter by Position:</label>
+                     <select id="positionFilter" class="filter-select">
+                        <option value="all">All Positions</option>
+                        <option value="Junior">Junior</option>
+                        <option value="Middle">Middle</option>
+                        <option value="Senior">Senior</option>
+                        <option value="Lead">Lead</option>
+                        <option value="Architect">Architect</option>
+                        <option value="BO">BO</option>
+                     </select>
+                  </div>
+                  <button class="clear-filters-btn" id="clearEmployeesFilters">Clear Filters</button>
+               </div>
                <table>
                   <thead>
                      <tr>
-                        <th>Name</th>
-                        <th>Surname</th>
-                        <th>Age</th>
-                        <th>Position</th>
-                        <th>Salary</th>
+                        <th data-sort="name">Name <span class="sort-icon">⇅</span></th>
+                        <th data-sort="surname">Surname <span class="sort-icon">⇅</span></th>
+                        <th data-sort="age">Age <span class="sort-icon">⇅</span></th>
+                        <th data-sort="position">Position <span class="sort-icon">⇅</span></th>
+                        <th data-sort="salary">Salary <span class="sort-icon">⇅</span></th>
                         <th>Est. Payment</th>
                         <th>Projects</th>
                         <th>Proj. Income</th>
@@ -209,6 +233,83 @@
          </div>
       </div>
    </div>
+   <div class="popup-overlay" id="employeesPopupOverlay"></div>
+   <div class="popup" id="employeesPopup">
+      <div class="popup-header">
+         <h3>Employees on Project</h3>
+         <button class="popup-close">&times;</button>
+      </div>
+      <div class="popup-body" id="employeesPopupBody">
+         <div class="loading">Loading...</div>
+      </div>
+   </div>
+
+   <div class="popup-overlay" id="assignmentsPopupOverlay"></div>
+   <div class="popup" id="assignmentsPopup">
+      <div class="popup-header">
+         <h3>Employee's Projects</h3>
+         <button class="popup-close">&times;</button>
+      </div>
+      <div class="popup-body" id="assignmentsPopupBody">
+         <div class="loading">Loading...</div>
+      </div>
+   </div>
+   <div class="popup-overlay" id="vacationPopupOverlay"></div>
+   <div class="popup vacation-popup" id="vacationPopup">
+      <div class="popup-header">
+         <h3 id="vacationEmployeeName">Employee Vacation</h3>
+         <button class="popup-close">&times;</button>
+      </div>
+      <div class="popup-body">
+         <div class="vacation-months">
+            <select id="vacationMonthSelect">
+               <option value="0">January</option>
+               <option value="1">February</option>
+               <option value="2">March</option>
+               <option value="3">April</option>
+               <option value="4">May</option>
+               <option value="5">June</option>
+               <option value="6">July</option>
+               <option value="7">August</option>
+               <option value="8">September</option>
+               <option value="9">October</option>
+               <option value="10">November</option>
+               <option value="11">December</option>
+            </select>
+            <select id="vacationYearSelect">
+               <option value="2025">2025</option>
+               <option value="2026">2026</option>
+               <option value="2027">2027</option>
+            </select>
+         </div>
+
+         <div class="calendar-grid" id="calendarGrid">
+         </div>
+
+         <div class="vacation-actions">
+            <button id="saveVacationBtn" class="submit-btn">Save Vacation Days</button>
+         </div>
+      </div>
+   </div>
+
+   <!-- Popup для Seed Data -->
+   <div class="popup-overlay" id="seedPopupOverlay"></div>
+   <div class="popup" id="seedPopup">
+      <div class="popup-header">
+         <h3>Load Seed Data</h3>
+         <button class="popup-close">&times;</button>
+      </div>
+      <div class="popup-body">
+         <p>This will replace all current data for <strong>all months</strong> with demo data.</p>
+         <p class="warning-text">This action cannot be undone!</p>
+
+         <div class="seed-actions">
+            <button id="cancelSeedBtn" class="cancel-btn">Cancel</button>
+            <button id="confirmSeedBtn" class="submit-btn">Load Seed Data</button>
+         </div>
+      </div>
+   </div>
+
 
    <script type="module" src="modules/js/main.js"></script>
 </body>
